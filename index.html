@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atlántida — La civilización perdida</title>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root { --gold:#c9a24a; --deep:#03111f; --sea:#062a44; --teal:#0d4f63; }
+  html { scroll-behavior:smooth; }
+  body { font-family:'Inter',sans-serif; background:var(--deep); color:#dbe7ef; overflow-x:hidden; }
+  .serif { font-family:'Cormorant Garamond',serif; }
+  .gold { color:var(--gold); }
+  .hero { background:radial-gradient(ellipse at 50% 120%, #0f6a7a 0%, #062a44 35%, #03111f 75%); position:relative; }
+  .hero::after { content:""; position:absolute; inset:0; background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E"); pointer-events:none; }
+  .ray { position:absolute; top:-20%; width:140px; height:140%; background:linear-gradient(to bottom, rgba(201,162,74,0.0), rgba(120,200,220,0.08), rgba(201,162,74,0)); transform:skewX(-15deg); filter:blur(14px); animation:sway 9s ease-in-out infinite alternate; }
+  @keyframes sway { from{transform:skewX(-15deg) translateX(0);opacity:.5} to{transform:skewX(-10deg) translateX(60px);opacity:1} }
+  .bubble { position:absolute; bottom:-40px; border-radius:50%; border:1px solid rgba(160,220,240,.35); background:radial-gradient(circle at 30% 30%, rgba(255,255,255,.25), rgba(255,255,255,.02)); animation:rise linear infinite; }
+  @keyframes rise { to { transform:translateY(-110vh) translateX(30px); opacity:0; } }
+  .card { background:linear-gradient(160deg, rgba(13,79,99,.35), rgba(6,42,68,.25)); border:1px solid rgba(201,162,74,.18); backdrop-filter:blur(6px); transition:.35s; }
+  .card:hover { border-color:rgba(201,162,74,.55); transform:translateY(-4px); box-shadow:0 20px 50px -20px rgba(201,162,74,.3); }
+  .divider { height:1px; background:linear-gradient(90deg, transparent, var(--gold), transparent); }
+  .reveal { opacity:0; transform:translateY(30px); transition:opacity .8s ease, transform .8s ease; }
+  .reveal.visible { opacity:1; transform:none; }
+  .timeline::before { content:""; position:absolute; left:50%; top:0; bottom:0; width:2px; background:linear-gradient(to bottom, transparent, var(--gold), transparent); transform:translateX(-50%); }
+  @media(max-width:768px){ .timeline::before{ left:14px; } }
+  .ring { position:absolute; border-radius:50%; border:2px solid; }
+  .quote-mark { font-size:8rem; line-height:1; position:absolute; top:-2rem; left:-1rem; color:rgba(201,162,74,.15); font-family:'Cormorant Garamond',serif; }
+  .nav-link { position:relative; }
+  .nav-link::after { content:""; position:absolute; left:0; bottom:-4px; width:0; height:1px; background:var(--gold); transition:.3s; }
+  .nav-link:hover::after { width:100%; }
+  .tab-btn.active { background:var(--gold); color:var(--deep); }
+  .accordion-content { max-height:0; overflow:hidden; transition:max-height .5s ease; }
+  .wave { position:absolute; bottom:0; left:0; width:200%; height:80px; background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 80'%3E%3Cpath d='M0 40 Q150 0 300 40 T600 40 T900 40 T1200 40 V80 H0z' fill='%2303111f'/%3E%3C/svg%3E") repeat-x; background-size:1200px 80px; animation:wave 14s linear infinite; }
+  @keyframes wave { to { transform:translateX(-1200px); } }
+  ::-webkit-scrollbar{width:8px} ::-webkit-scrollbar-track{background:#03111f} ::-webkit-scrollbar-thumb{background:#0d4f63;border-radius:4px}
+  .glow { text-shadow:0 0 30px rgba(201,162,74,.4); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header id="nav" class="fixed top-0 inset-x-0 z-50 transition-all duration-500">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+    <a href="#top" class="serif text-2xl font-bold tracking-widest gold">ΑΤΛΑΝΤΙΣ</a>
+    <nav class="hidden lg:flex gap-7 text-sm tracking-wide uppercase text-slate-300">
+      <a class="nav-link" href="#legend">Leyenda</a>
+      <a class="nav-link" href="#plato">Platón</a>
+      <a class="nav-link" href="#city">Ciudad</a>
+      <a class="nav-link" href="#culture">Cultura</a>
+      <a class="nav-link" href="#timeline">Cronología</a>
+      <a class="nav-link" href="#theories">Hipótesis</a>
+      <a class="nav-link" href="#gallery">Galería</a>
+      <a class="nav-link" href="#quiz">Quiz</a>
+    </nav>
+    <button id="burger" class="lg:hidden text-2xl gold">☰</button>
+  </div>
+  <div id="mobileMenu" class="hidden lg:hidden bg-[#03111f]/95 border-t border-[#c9a24a]/20 px-6 py-4 flex flex-col gap-3 text-sm uppercase tracking-wide">
+    <a href="#legend">Leyenda</a><a href="#plato">Platón</a><a href="#city">Ciudad</a><a href="#culture">Cultura</a><a href="#timeline">Cronología</a><a href="#theories">Hipótesis</a><a href="#gallery">Galería</a><a href="#quiz">Quiz</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section id="top" class="hero min-h-screen flex items-center justify-center text-center overflow-hidden">
+  <div class="ray" style="left:15%"></div>
+  <div class="ray" style="left:45%;animation-delay:-3s"></div>
+  <div class="ray" style="left:75%;animation-delay:-6s"></div>
+  <div id="bubbles"></div>
+  <div class="relative z-10 px-6 max-w-4xl">
+    <p class="tracking-[.5em] uppercase text-xs text-cyan-200/70 mb-6">Platón · Timeo y Critias · c. 360 a. C.</p>
+    <h1 class="serif text-6xl md:text-8xl lg:text-9xl font-bold gold glow leading-none">Atlántida</h1>
+    <p class="serif italic text-2xl md:text-3xl mt-6 text-slate-200">«En un solo día y una noche de desgracia… la isla de Atlántida desapareció, hundiéndose en el mar»</p>
+    <p class="mt-8 text-slate-300/80 max-w-2xl mx-auto leading-relaxed">El mayor enigma de la humanidad. Una isla-imperio más poderosa que cualquier reino de la Antigüedad — y que desapareció sin dejar rastro en un solo día. ¿Mito, alegoría o recuerdo de una catástrofe real?</p>
+    <div class="mt-10 flex flex-wrap gap-4 justify-center">
+      <a href="#legend" class="px-8 py-3 bg-[#c9a24a] text-[#03111f] font-semibold tracking-wide hover:bg-[#e0bb62] transition">Sumergirse</a>
+      <a href="#quiz" class="px-8 py-3 border border-[#c9a24a]/60 gold tracking-wide hover:bg-[#c9a24a]/10 transition">Hacer el quiz</a>
+    </div>
+    <div class="mt-16 grid grid-cols-3 gap-6 max-w-xl mx-auto text-center">
+      <div><div class="serif text-4xl gold" data-count="9000">0</div><div class="text-xs uppercase tracking-wider text-slate-400 mt-1">años antes de Solón</div></div>
+      <div><div class="serif text-4xl gold" data-count="10">0</div><div class="text-xs uppercase tracking-wider text-slate-400 mt-1">reyes gemelos</div></div>
+      <div><div class="serif text-4xl gold" data-count="1200">0</div><div class="text-xs uppercase tracking-wider text-slate-400 mt-1">barcos de guerra</div></div>
+    </div>
+  </div>
+  <div class="wave"></div>
+</section>
+
+<!-- LEGEND -->
+<section id="legend" class="py-24 px-6">
+  <div class="max-w-6xl mx-auto">
+    <div class="reveal text-center mb-16">
+      <p class="tracking-[.4em] uppercase text-xs gold mb-3">Capítulo I</p>
+      <h2 class="serif text-5xl md:text-6xl font-semibold">La leyenda de la isla desaparecida</h2>
+      <div class="divider w-40 mx-auto mt-6"></div>
+    </div>
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      <div class="reveal space-y-5 text-slate-300 leading-relaxed text-lg">
+        <p>Según Platón, Atlántida era una inmensa isla situada «ante las Columnas de Hércules» — más allá del estrecho de Gibraltar, en el océano Atlántico. La isla era mayor que Libia y Asia juntas, y desde ella se podía pasar a otras islas, y desde allí al continente opuesto.</p>
+        <p>La isla era gobernada por los descendientes del dios Poseidón y una mujer mortal llamada Cleito. Poseidón se enamoró de ella y, para protegerla, rodeó la colina donde vivía con anillos concéntricos de agua y tierra — dos de tierra y tres de agua. Así nació la capital con su legendaria disposición.</p>
+        <p>Los atlantes fueron nobles y virtuosos mientras perduró en ellos la naturaleza divina. Pero cuando esta «se disolvió» en la naturaleza humana, se volvieron soberbios, codiciosos y belicosos. Su imperio atacó a Atenas y a Egipto — y fue derrotado por los atenienses.</p>
+        <p>Entonces Zeus, «el dios de los dioses, que vela por las leyes», decidió castigar a los atlantes. En un solo día y una noche de desgracia, terribles terremotos e inundaciones devoraron al ejército ateniense y a toda la isla de Atlántida.</p>
+      </div>
+      <div class="reveal relative h-[420px] flex items-center justify-center">
+        <div id="ringsViz" class="relative w-80 h-80">
+          <div class="ring border-[#1f7f94]/60" style="inset:0;animation:spin 40s linear infinite"></div>
+          <div class="ring border-[#c9a24a]/50" style="inset:12%;"></div>
+          <div class="ring border-[#1f7f94]/60" style="inset:24%;"></div>
+          <div class="ring border-[#c9a24a]/50" style="inset:36%;"></div>
+          <div class="ring border-[#1f7f94]/60" style="inset:48%;"></div>
+          <div class="absolute inset-[38%] rounded-full bg-gradient-to-br from-[#c9a24a] to-[#8a6a22] shadow-[0_0_60px_rgba(201,162,74,.5)] flex items-center justify-center serif text-[#03111f] font-bold text-xl">Acrópolis</div>
+          <div class="absolute left-1/2 top-1/2 w-[2px] h-1/2 bg-gradient-to-b from-[#c9a24a] to-transparent origin-top" style="transform:translateX(-50%)"></div>
+        </div>
+        <p class="absolute bottom-0 text-xs text-slate-400 text-center w-full">Esquema de los anillos concéntricos de la capital, según el relato de Platón</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PLATO -->
+<section id="plato" class="py-24 px-6 bg-gradient-to-b from-transparent via-[#062a44]/40 to-transparent">
+  <div class="max-w-6xl mx-auto">
+    <div class="reveal text-center mb-16">
+      <p class="tracking-[.4em] uppercase text-xs gold mb-3">Capítulo II</p>
+      <h2 class="serif text-5xl md:text-6xl font-semibold">Fuentes: Platón y la cadena de la tradición</h2>
+      <div class="divider w-40 mx-auto mt-6"></div>
+      <p class="mt-6 text-slate-400 max-w-3xl mx-auto">La única fuente primaria sobre Atlántida son dos diálogos de Platón. Ningún autor anterior a él menciona la isla. El propio Platón afirmaba que la historia se había transmitido en cadena desde los sacerdotes egipcios.</p>
+    </div>
+    <div class="grid md:grid-cols-5 gap-4 mb-16 reveal">
+      <div class="card p-5 text-center"><div class="text-3xl mb-2">𓂀</div><h4 class="serif text-xl gold">Sacerdotes de Sais</h4><p class="text-sm text-slate-400 mt-2">Guardianes egipcios de los registros del templo de la diosa Neit</p></div>
+      <div class="card p-5 text-center"><div class="text-3xl mb-2">⚖</div><h4 class="serif text-xl gold">Solón</h4><p class="text-sm text-slate-400 mt-2">Legislador ateniense, c. 600 a. C., que escuchó el relato en Egipto</p></div>
+      <div class="card p-5 text-center"><div class="text-3xl mb-2">📜</div><h4 class="serif text-xl gold">Drópides</h4><p class="text-sm text-slate-400 mt-2">Pariente y amigo de Solón, transmitió la historia a su hijo</p></div>
+      <div class="card p-5 text-center"><div class="text-3xl mb-2">👴</div><h4 class="serif text-xl gold">Critias el Viejo</h4><p class="text-sm text-slate-400 mt-2">La relató a su nieto a la edad de noventa años</p></div>
+      <div class="card p-5 text-center"><div class="text-3xl mb-2">🏛</div><h4 class="serif text-xl gold">Critias / Platón</h4><p class="text-sm text-slate-400 mt-2">Critias el Joven la narra a Sócrates en los diálogos</p></div>
+    </div>
+    <div class="grid md:grid-cols-2 gap-8">
+      <div class="reveal card p-8 relative">
+        <span class="quote-mark">“</span>
+        <h3 class="serif text-3xl gold mb-4">Timeo</h3>
+        <p class="text-slate-300 leading-relaxed mb-4">Aquí la historia de Atlántida se expone brevemente. El sacerdote egipcio dice a Solón: «¡Oh, Solón, Solón! Ustedes, los helenos, son siempre niños, y no hay entre los helenos ningún anciano» — pues los griegos no recuerdan su propio pasado glorioso.</p>
+        <p class="text-slate-300 leading-relaxed">El sacerdote refiere cómo, 9.000 años antes, la antigua Atenas rechazó la invasión de un poder que venía «del mar Atlántico», y cómo luego la isla pereció y el mar en aquel lugar se volvió innavegable a causa del lodo.</p>
+      </div>
+      <div class="reveal card p-8 relative">
+        <span class="quote-mark">“</span>
+        <h3 class="serif text-3xl gold mb-4">Critias</h3>
+        <p class="text-slate-300 leading-relaxed mb-4">Un diálogo inconcluso que contiene la descripción más detallada de la isla: su geografía, capital, templos, ejército, leyes y poder real. El texto se interrumpe en el punto en que Zeus reúne a los dioses para anunciar el castigo de los atlantes.</p>
+        <p class="text-slate-300 leading-relaxed">Precisamente el Critias se convirtió en la fuente de todos los detalles que durante siglos han agitado la imaginación: el oricalco, los anillos de canales, el templo de Poseidón, los toros, los diez reyes.</p>
+      </div>
+    </div>
+    <div class="reveal mt-12 border-l-2 border-[#c9a24a] pl-6 py-2 max-w-3xl mx-auto">
+      <p class="serif italic text-xl text-slate-200">«Esta isla era mayor que Libia y Asia juntas… Pero más tarde, cuando llegó el momento de terremotos e inundaciones sin precedentes, en un solo día y noche terrible toda su fuerza militar fue devorada por la tierra que se abrió; e igualmente Atlántida desapareció, hundiéndose en el abismo».</p>
+      <p class="text-sm gold mt-3">— Platón, Timeo, 24e–25d</p>
+    </div>
+  </div>
+</section>
+
+<!-- CITY -->
+<section id="city" class="py-24 px-6">
+  <div class="max-w-6xl mx-auto">
+    <div class="reveal text-center mb-16">
+      <p class="tracking-[.4em] uppercase text-xs gold mb-3">Capítulo III</p>
+      <h2 class="serif text-5xl md:text-6xl font-semibold">La capital de los atlantes</h2>
+      <div class="divider w-40 mx-auto mt-6"></div>
+    </div>
+    <div class="reveal flex flex-wrap justify-center gap-2 mb-10" id="cityTabs">
+      <button class="tab-btn active px-5 py-2 border border-[#c9a24a]/50 text-sm tracking-wide transition" data-tab="rings">Anillos y canales</button>
+      <button class="tab-btn px-5 py-2 border border-[#c9a24a]/50 text-sm tracking-wide transition" data-tab="temple">Templo de Poseidón</button>
+      <button class="tab-btn px-5 py-2 border border-[#c9a24a]/50 text-sm tracking-wide transition" data-tab="harbor">Puertos y flota</button>
+      <button class="tab-btn px-5 py-2 border border-[#c9a24a]/50 text-sm tracking-wide transition" data-tab="plain">La gran llanura</button>
+      <button class="tab-btn px-5 py-2 border border-[#c9a24a]/50 text-sm tracking-wide transition" data-tab="orichalcum">Oricalco</button>
+    </div>
+    <div class="reveal card p-8 md:p-12 min-h-[300px]">
+      <div class="tab-pane" data-pane="rings">
+        <h3 class="serif text-3xl gold mb-4">Anillos concéntricos</h3>
+        <p class="text-slate-300 leading-relaxed mb-4">La isla central tenía 5 estadios de diámetro (unos 925 m). Estaba rodeada por tres anillos de agua de 1, 2 y 3 estadios de anchura, y dos de tierra iguales en anchura a los anillos de agua vecinos. El diámetro total de la ciudad, incluidos los anillos, era de 27 estadios — casi 5 km.</p>
+        <p class="text-slate-300 leading-relaxed mb-4">Los atlantes excavaron un canal de 3 plethra de anchura (≈ 90 m), 100 pies de profundidad y 50 estadios de longitud desde el mar hasta el anillo exterior, convirtiéndolo en puerto. A través de los anillos de tierra se abrieron túneles con puentes por los que podían pasar las trirremes.</p>
+        <p class="text-slate-300 leading-relaxed">Los muros del anillo exterior estaban recubiertos de cobre, los del anillo medio de estaño, y el muro de la acrópolis brillaba con oricalco, «que despedía un fulgor de fuego».</p>
+      </div>
+      <div class="tab-pane hidden" data-pane="temple">
+        <h3 class="serif text-3xl gold mb-4">Templo de Poseidón y Cleito</h3>
+        <p class="text-slate-300 leading-relaxed mb-4">En la acrópolis se alzaba un templo de un estadio de largo (185 m) y tres plethra de ancho. Por fuera estaba revestido de plata, y sus acroterias, de oro. Por dentro, el techo era de marfil, adornado con oro, plata y oricalco; las paredes, columnas y el suelo eran totalmente de oricalco.</p>
+        <p class="text-slate-300 leading-relaxed mb-4">En el centro se erguía una estatua de oro de Poseidón sobre un carro, guiando seis caballos alados — tan enorme que su cabeza tocaba el techo. A su alrededor había cien nereidas sobre delfines.</p>
+        <p class="text-slate-300 leading-relaxed">Por fuera, el templo estaba rodeado de estatuas de oro de los diez reyes y sus esposas. Cerana brotaban dos fuentes — una cálida y otra fría — con baños para los reyes, los ciudadanos, las mujeres e incluso los caballos.</p>
+      </div>
+      <div class="tab-pane hidden" data-pane="harbor">
+        <h3 class="serif text-3xl gold mb-4">Puertos y poder marítimo</h3>
+        <p class="text-slate-300 leading-relaxed mb-4">Los puertos estaban «llenos de barcos y mercaderes llegados de todas partes», y de día y de noche se alzaba un «estruendo, un ruido y un murmullo de muchas voces». El anillo de agua exterior se dedicaba por completo a astilleros: en las rocas se excavaron diques para las trirremes.</p>
+        <p class="text-slate-300 leading-relaxed mb-4">La flota militar de Atlántida contaba con 1.200 barcos. Para el abastecimiento, cada uno de los 60.000 lotes de la llanura aportaba un contingente militar fijo: la sexta parte de un carro de guerra, dos caballos con jinetes, soldados pesadamente armados, arqueros, honderos y cuatro marineros.</p>
+        <p class="text-slate-300 leading-relaxed">El total del ejército, según los cálculos del texto, superaba el millón de hombres — una cifra claramente destinada a subrayar la grandeza del imperio.</p>
+      </div>
+      <div class="tab-pane hidden" data-pane="plain">
+        <h3 class="serif text-3xl gold mb-4">La gran llanura</h3>
+        <p class="text-slate-300 leading-relaxed mb-4">La ciudad estaba en la orilla sur de una inmensa llanura de 3.000 × 2.000 estadios (≈ 555 × 370 km), rodeada de montañas «que superaban a todas las actuales en majestad y belleza». Las montañas la protegían de los vientos del norte.</p>
+        <p class="text-slate-300 leading-relaxed mb-4">La llanura estaba ceñida por un canal gigantesco de un plethron de profundidad, un estadio de anchura y 10.000 estadios de longitud. De él, cada 100 estadios, partían canales rectos de 100 pies de ancho, unidos por canales transversales — formando una red para el riego y el transporte de madera.</p>
+        <p class="text-slate-300 leading-relaxed">La tierra daba dos cosechas al año: en invierno, por las lluvias; en verano, por los canales. La isla era rica en madera, elefantes, frutos y «sustancias aromáticas».</p>
+      </div>
+      <div class="tab-pane hidden" data-pane="orichalcum">
+        <h3 class="serif text-3xl gold mb-4">Oricalco — el metal de los atlantes</h3>
+        <p class="text-slate-300 leading-relaxed mb-4">El oricalco (griego ὀρείχαλκος, «cobre de montaña») era un metal legendario que «se extraía de las entrañas de la tierra en diversos lugares de la isla» y «en valor solo cedía ante el oro». Para la época de Platón ya se conocía «solo de nombre».</p>
+        <p class="text-slate-300 leading-relaxed mb-4">Los estudiosos modernos creen que se trataba de una aleación natural de cobre y zinc — una clase de latón. En 2015, frente a la costa de Sicilia, en los restos de un barco del siglo VI a. C., se hallaron 39 lingotes de una aleación de cobre, zinc, plomo, níquel e hierro — la prensa los llamó «oricalco».</p>
+        <p class="text-slate-300 leading-relaxed">En una columna de oricalco en el centro del templo estaban grabadas las leyes de Poseidón, ante la cual los diez reyes prestaban juramento y juzgaban.</p>
+      </div>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-10">
+      <div class="reveal card p-6"><div class="serif text-4xl gold">27</div><p class="text-sm text-slate-400 mt-1">estadios — diámetro de la capital con anillos (≈ 5 km)</p></div>
+      <div class="reveal card p-6"><div class="serif text-4xl gold">50</div><p class="text-sm text-slate-400 mt-1">estadios — longitud del canal al mar (≈ 9 km)</p></div>
+      <div class="reveal card p-6"><div class="serif text-4xl gold">10 000</div><p class="text-sm text-slate-400 mt-1">estadios — perímetro del canal alrededor de la llanura</p></div>
+      <div class="reveal card p-6"><div class="serif text-4xl gold">60 000</div><p class="text-sm text-slate-400 mt-1">lotes de los que se reclutaba el ejército</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CULTURE -->
+<section id="culture" class="py-24 px-6 bg-gradient-to-b from-transparent via-[#062a44]/40 to-transparent">
+  <div class="max-w-6xl mx-auto">
+    <div class="reveal text-center mb-16">
+      <p class="tracking-[.4em] uppercase text-xs gold mb-3">Capítulo IV</p>
+      <h2 class="serif text-5xl md:text-6xl font-semibold">Sociedad, poder y ritos</h2>
+      <div class="divider w-40 mx-auto mt-6"></div>
+    </div>
+    <div class="grid lg:grid-cols-3 gap-8 mb-16">
+      <div class="reveal card p-8">
+        <h3 class="serif text-2xl gold mb-3">Los diez reyes</h3>
+        <p class="text-slate-300 text-sm leading-relaxed">Poseidón y Cleito engendraron cinco pares de gemelos. El mayor, Atlas, recibió la parte central y el poder supremo — la isla y el océano llevan su nombre. Los otros nueve gobernaron sus propios dominios. Sus nombres, según Platón: Atlas y Gadiro (Eumelo), Anferes y Evaemón, Mneso y Autóctono, Elasipo y Méstor, Azes y Diaprepes.</p>
+      </div>
+      <div class="reveal card p-8">
+        <h3 class="serif text-2xl gold mb-3">Las leyes de Poseidón</h3>
+        <p class="text-slate-300 text-sm leading-relaxed">Los reyes no podían tomar las armas unos contra otros y estaban obligados a acudir en ayuda de cualquiera si alguien intentaba derrocar a la estirpe real. Las decisiones sobre la guerra se tomaban en común, y un rey no podía ejecutar a un pariente de otro rey sin el consentimiento de la mayoría. Las leyes estaban grabadas en una columna de oricalco.</p>
+      </div>
+      <div class="reveal card p-8">
+        <h3 class="serif text-2xl gold mb-3">El rito del toro</h3>
+        <p class="text-slate-300 text-sm leading-relaxed">Cada cinco y seis años, por turno, los diez reyes se reunían en el templo. Sin armas, solo con bastones y lazos, capturaban un toro de la manada sagrada, lo sacrificaban sobre la columna para que la sangre corriera sobre las inscripciones y juraban juzgar según las leyes. El juicio se celebraba de noche, con vestiduras azul oscuro y el fuego apagado.</p>
+      </div>
+    </div>
+    <div class="reveal">
+      <h3 class="serif text-3xl text-center mb-8">La vida de la isla — en detalle</h3>
+      <div class="max-w-3xl mx-auto space-y-3" id="accordion">
+        <div class="card"><button class="acc-btn w-full text-left px-6 py-4 flex justify-between items-center serif text-xl"><span>Economía y riquezas naturales</span><span class="gold transition-transform">+</span></button><div class="accordion-content px-6 text-slate-300 text-sm leading-relaxed"><p class="pb-5">La isla producía metales duros y fusibles, incluido el oricalco. Sus bosques suministraban madera para la construcción; la llanura alimentaba a «numerosos animales domésticos y bestias salvajes», incluidos elefantes. Crecían raíces, hierbas, árboles, flores y frutos «para deleite y solaz». Platón destaca especialmente la vid, el grano, las legumbres y los frutos «de cáscara dura».</p></div></div>
+        <div class="card"><button class="acc-btn w-full text-left px-6 py-4 flex justify-between items-center serif text-xl"><span>Arquitectura y materiales de construcción</span><span class="gold transition-transform">+</span></button><div class="accordion-content px-6 text-slate-300 text-sm leading-relaxed"><p class="pb-5">La piedra se extraía en tres colores — blanco, negro y rojo — directamente bajo la isla central y los anillos de tierra, al tiempo que se excavaban diques en la roca. Los edificios se construían de un solo tono o de piedra variegada «para diversión». En los anillos había jardines, gimnasios, un hipódromo de un estadio de ancho, cuarteles de la guardia y santuarios de los dioses.</p></div></div>
+        <div class="card"><button class="acc-btn w-full text-left px-6 py-4 flex justify-between items-center serif text-xl"><span>La guardia real y la jerarquía de la confianza</span><span class="gold transition-transform">+</span></button><div class="accordion-content px-6 text-slate-300 text-sm leading-relaxed"><p class="pb-5">Platón describe una guardia de tres niveles: la mayor parte vivía en el anillo de tierra exterior, los más leales en el interior, más cerca de la acrópolis, y los más dignos de confianza directamente en la ciudadela, alrededor de los aposentos reales. Este detalle refleja el tema de la confianza y la estabilidad política, importante en la filosofía de Platón.</p></div></div>
+        <div class="card"><button class="acc-btn w-full text-left px-6 py-4 flex justify-between items-center serif text-xl"><span>La decadencia moral</span><span class="gold transition-transform">+</span></button><div class="accordion-content px-6 text-slate-300 text-sm leading-relaxed"><p class="pb-5">«Mientras perduró en ellos la naturaleza divina, miraban con desdén todo lo que no fuera la virtud y no estimaban la riqueza… Pero cuando se agotó la parte divina y prevaleció el carácter humano, no pudieron soportar su riqueza y perdieron el decoro». Para Platón esta es la clave de toda la historia — un relato de la soberbia (ὕβρις) y su castigo.</p></div></div>
+        <div class="card"><button class="acc-btn w-full text-left px-6 py-4 flex justify-between items-center serif text-xl"><span>La antigua Atenas — antagonista de Atlántida</span><span class="gold transition-transform">+</span></button><div class="accordion-content px-6 text-slate-300 text-sm leading-relaxed"><p class="pb-5">Pocos recuerdan que Platón describe también a los «ideales» protoatenienses: un estado con una clase de guardianes, propiedad común, moderación y justicia — la encarnación de su República. Atenas detuvo sola a los atlantes y liberó a los pueblos sometidos. La destrucción de Atenas en el mismo cataclismo es simbólica: incluso el estado perfecto está sujeto a los ciclos cósmicos.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section id="timeline" class="py-24 px-6">
+  <div class="max-w-5xl mx-auto">
+    <div class="reveal text-center mb-16">
+      <p class="tracking-[.4em] uppercase text-xs gold mb-3">Capítulo V</p>
+      <h2 class="serif text-5xl md:text-6xl font-semibold">Cronología del mito</h2>
+      <div class="divider w-40 mx-auto mt-6"></div>
+      <p class="mt-6 text-slate-400">Del diálogo platónico a la cultura popular contemporánea</p>
+    </div>
+    <div class="timeline relative space-y-12" id="tl"></div>
+  </div>
+</section>
+
+<!-- THEORIES -->
+<section id="theories" class="py-24 px-6 bg-gradient-to-b from-transparent via-[#062a44]/40 to-transparent">
+  <div class="max-w-6xl mx-auto">
+    <div class="reveal text-center mb-16">
+      <p class="tracking-[.4em] uppercase text-xs gold mb-3">Capítulo VI</p>
+      <h2 class="serif text-5xl md:text-6xl font-semibold">Dónde se ha buscado Atlántida</h2>
+      <div class="divider w-40 mx-auto mt-6"></div>
+      <p class="mt-6 text-slate-400 max-w-3xl mx-auto">A lo largo de 2.400 años se han propuesto más de 50 ubicaciones. He aquí las hipótesis más célebres, con una valoración de su plausibilidad.</p>
+    </div>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="theoryGrid"></div>
+    <div class="reveal mt-16 card p-8 md:p-10">
+      <h3 class="serif text-3xl gold mb-4">Qué dice la ciencia</h3>
+      <div class="grid md:grid-cols-2 gap-8 text-slate-300 leading-relaxed text-sm">
+        <div>
+          <p class="mb-3">La inmensa mayoría de los historiadores y arqueólogos consideran Atlántida una <strong class="text-white">ficción filosófica</strong> de Platón. Los argumentos:</p>
+          <ul class="list-disc pl-5 space-y-2">
+            <li>Antes de Platón ninguna fuente menciona Atlántida — ni Heródoto, que visitó Egipto, ni Homero, ni Hesíodo.</li>
+            <li>Aristóteles, discípulo de Platón, según Estrabón, consideraba la isla una invención: «quien la inventó, la hizo desaparecer».</li>
+            <li>Geología: en el Atlántico no hay rastros de un continente sumergido; la corteza oceánica es fundamentalmente distinta de la continental.</li>
+            <li>9.000 años antes de Solón corresponde al Paleolítico, cuando no existían ni Atenas, ni Egipto, ni barcos.</li>
+          </ul>
+        </div>
+        <div>
+          <p class="mb-3">Platón usó Atlántida como <strong class="text-white">ejemplo didáctico</strong> — una ilustración de cómo un estado ideal (protoatenas) se enfrenta a un imperio marítimo corrompido por la riqueza. Muchos ven en ello una alusión a:</p>
+          <ul class="list-disc pl-5 space-y-2">
+            <li>Las guerras persas y el imperio marítimo ateniense, destruido por su propia soberbia en la guerra del Peloponeso;</li>
+            <li>La destrucción de la isla de Hélice en el 373 a. C., sumergida en una sola noche durante la vida de Platón;</li>
+            <li>La catástrofe minoica — la erupción de Thera, cuyo recuerdo pudo llegar a través de Egipto;</li>
+            <li>La fracasada expedición siciliana de los atenienses y las costumbres de Siracusa, que Platón visitó personalmente.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery" class="py-24 px-6">
+  <div class="max-w-6xl mx-auto">
+    <div class="reveal text-center mb-16">
+      <p class="tracking-[.4em] uppercase text-xs gold mb-3">Capítulo VII</p>
+      <h2 class="serif text-5xl md:text-6xl font-semibold">Atlántida en la cultura</h2>
+      <div class="divider w-40 mx-auto mt-6"></div>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5" id="cultureGrid"></div>
+    <div class="reveal mt-16">
+      <h3 class="serif text-3xl text-center mb-8">Citas sobre Atlántida</h3>
+      <div class="relative card p-10 text-center min-h-[200px] flex flex-col justify-center">
+        <p id="quoteText" class="serif italic text-2xl text-slate-100 transition-opacity duration-500"></p>
+        <p id="quoteAuthor" class="gold mt-4 text-sm tracking-wide transition-opacity duration-500"></p>
+        <div class="flex justify-center gap-3 mt-6">
+          <button id="prevQ" class="w-10 h-10 border border-[#c9a24a]/50 gold hover:bg-[#c9a24a]/10">‹</button>
+          <button id="nextQ" class="w-10 h-10 border border-[#c9a24a]/50 gold hover:bg-[#c9a24a]/10">›</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GLOSSARY -->
+<section class="py-24 px-6 bg-gradient-to-b from-transparent via-[#062a44]/40 to-transparent">
+  <div class="max-w-5xl mx-auto">
+    <div class="reveal text-center mb-12">
+      <p class="tracking-[.4em] uppercase text-xs gold mb-3">Apéndice</p>
+      <h2 class="serif text-5xl font-semibold">Glosario</h2>
+      <div class="divider w-40 mx-auto mt-6"></div>
+    </div>
+    <input id="glossSearch" type="text" placeholder="Buscar términos…" class="reveal w-full max-w-md mx-auto block bg-[#062a44]/60 border border-[#c9a24a]/30 px-5 py-3 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-[#c9a24a] mb-8">
+    <div class="grid md:grid-cols-2 gap-4" id="glossary"></div>
+  </div>
+</section>
+
+<!-- QUIZ -->
+<section id="quiz" class="py-24 px-6">
+  <div class="max-w-3xl mx-auto">
+    <div class="reveal text-center mb-12">
+      <p class="tracking-[.4em] uppercase text-xs gold mb-3">La prueba</p>
+      <h2 class="serif text-5xl font-semibold">Quiz: Conocedor de Atlántida</h2>
+      <div class="divider w-40 mx-auto mt-6"></div>
+    </div>
+    <div class="reveal card p-8 md:p-10" id="quizBox"></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="border-t border-[#c9a24a]/20 py-12 px-6 text-center">
+  <div class="serif text-3xl gold tracking-widest mb-3">ΑΤΛΑΝΤΙΣ</div>
+  <p class="text-slate-400 text-sm max-w-xl mx-auto">Este sitio se ha creado con fines educativos. Todas las descripciones de la capital, la sociedad y las leyes de los atlantes se basan en los diálogos de Platón Timeo y Critias (en la traducción de S. S. Averintsev).</p>
+  <p class="text-slate-600 text-xs mt-6">«Que el mar guarde sus secretos» · <span id="year"></span></p>
+</footer>
+
+<button id="toTop" class="fixed bottom-6 right-6 w-12 h-12 rounded-full bg-[#c9a24a] text-[#03111f] text-xl shadow-lg opacity-0 pointer-events-none transition">↑</button>
+
+<script>
+/* ===== Bubbles ===== */
+const bubbles = document.getElementById('bubbles');
+for (let i = 0; i < 25; i++) {
+  const b = document.createElement('div'); b.className = 'bubble';
+  const s = 6 + Math.random() * 22;
+  b.style.cssText = `width:${s}px;height:${s}px;left:${Math.random()*100}%;animation-duration:${10+Math.random()*18}s;animation-delay:-${Math.random()*20}s`;
+  bubbles.appendChild(b);
+}
+/* ===== Nav ===== */
+const nav = document.getElementById('nav'), toTop = document.getElementById('toTop');
+window.addEventListener('scroll', () => {
+  const y = scrollY;
+  nav.classList.toggle('bg-[#03111f]/90', y > 60); nav.classList.toggle('backdrop-blur', y > 60); nav.classList.toggle('shadow-lg', y > 60);
+  toTop.style.opacity = y > 500 ? 1 : 0; toTop.style.pointerEvents = y > 500 ? 'auto' : 'none';
+});
+toTop.onclick = () => scrollTo({top:0,behavior:'smooth'});
+document.getElementById('burger').onclick = () => document.getElementById('mobileMenu').classList.toggle('hidden');
+document.querySelectorAll('#mobileMenu a').forEach(a => a.onclick = () => document.getElementById('mobileMenu').classList.add('hidden'));
+document.getElementById('year').textContent = new Date().getFullYear();
+
+/* ===== Counters ===== */
+document.querySelectorAll('[data-count]').forEach(el => {
+  const target = +el.dataset.count; let cur = 0; const step = target / 80;
+  const t = setInterval(() => { cur += step; if (cur >= target) { cur = target; clearInterval(t); } el.textContent = Math.floor(cur).toLocaleString('es'); }, 20);
+});
+
+/* ===== Tabs ===== */
+document.querySelectorAll('.tab-btn').forEach(btn => btn.onclick = () => {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active');
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.toggle('hidden', p.dataset.pane !== btn.dataset.tab));
+});
+/* ===== Accordion ===== */
+document.querySelectorAll('.acc-btn').forEach(btn => btn.onclick = () => {
+  const c = btn.nextElementSibling, open = c.style.maxHeight;
+  document.querySelectorAll('.accordion-content').forEach(x => x.style.maxHeight = null);
+  document.querySelectorAll('.acc-btn span:last-child').forEach(s => s.textContent = '+');
+  if (!open) { c.style.maxHeight = c.scrollHeight + 'px'; btn.querySelector('span:last-child').textContent = '−'; }
+});
+
+/* ===== Timeline ===== */
+const tl = [
+  ['c. 1600 a. C.','Erupción de Santorini','La catástrofe minoica — la destrucción de Akrotiri y el declive de la civilización cretense. Posible prototipo histórico de la leyenda.'],
+  ['c. 600 a. C.','Solón en Egipto','Según Platón, el legislador ateniense conoce la historia de los sacerdotes de Sais.'],
+  ['373 a. C.','Destrucción de Hélice','Una ciudad griega en la costa del golfo de Corinto se hunde bajo las aguas en una sola noche — durante la vida de Platón.'],
+  ['c. 360 a. C.','Timeo y Critias','Platón compone los diálogos — la única fuente primaria sobre Atlántida.'],
+  ['c. 300 a. C.','Crantor','El primer comentarista de Platón habría visto en Egipto columnas con el relato. La noticia se conoce solo a través de Proclo.'],
+  ['s. I d. C.','Estrabón y Plinio','Aristóteles, según Estrabón, consideraba Atlántida una ficción. El mito se discute, pero sin entusiasmo.'],
+  ['1627','La Nueva Atlántida de Bacon','Francis Bacon escribe una utopía sobre una sociedad científica en la isla de Bensalem.'],
+  ['1665','Mapa de Kircher','Atanasio Kircher publica su famoso mapa de Atlántida en medio del Atlántico (con el sur arriba).'],
+  ['1882','Ignatius Donnelly','«Atlántida: el mundo antediluviano» — el libro que convirtió el mito en afición de masas y engendró la seudohistoria.'],
+  ['1888','Blavatsky','Los teósofos declaran a los atlantes la «cuarta raza raíz» — Atlántida entra en la esoteria.'],
+  ['1909','Hipótesis de Frost','K. T. Frost relaciona por primera vez Atlántida con la Creta minoica.'],
+  ['1968','La carretera de Bimini','Se descubren bloques de piedra submarinos cerca de las Bahamas — los entusiastas los declararon ruinas atlantes.'],
+  ['2001','Atlántida de Disney','La película «Atlántida: el imperio perdido» da a conocer la leyenda a una nueva generación.'],
+  ['2011','Proyecto Doñana','El equipo de Richard Freund busca huellas en las marismas del sur de España (documental de National Geographic).'],
+  ['2018','Aquaman','Atlántida se convierte en un reino submarino del universo cinematográfico de DC.'],
+];
+document.getElementById('tl').innerHTML = tl.map((t,i) => `
+  <div class="reveal relative md:grid md:grid-cols-2 md:gap-12 items-center pl-10 md:pl-0">
+    <div class="absolute left-[8px] md:left-1/2 top-2 w-4 h-4 rounded-full bg-[#c9a24a] shadow-[0_0_15px_rgba(201,162,74,.8)] md:-translate-x-1/2"></div>
+    <div class="${i%2 ? 'md:col-start-2 md:text-left' : 'md:text-right'}">
+      <div class="card p-6 inline-block text-left w-full">
+        <p class="gold text-sm tracking-wider">${t[0]}</p>
+        <h4 class="serif text-2xl mt-1">${t[1]}</h4>
+        <p class="text-slate-400 text-sm mt-2 leading-relaxed">${t[2]}</p>
+      </div>
+    </div>
+  </div>`).join('');
+
+/* ===== Theories ===== */
+const theories = [
+  {icon:'🌋',name:'Santorini / Creta minoica',where:'Mar Egeo',score:4,txt:'La hipótesis más respetada. La erupción del volcán de Thera hacia el 1600 a. C. destruyó una civilización marítima avanzada con culto al toro. Si se supone que Solón se equivocó por diez (900 en vez de 9.000 años), las fechas coinciden.'},
+  {icon:'🏜',name:'Doñana / Tartessos',where:'Sur de España',score:3,txt:'Las marismas de la desembocadura del Guadalquivir — territorio del legendario reino de Tartessos, situado «más allá de las Columnas de Hércules». Las imágenes por satélite muestran estructuras concéntricas; la zona sufrió tsunamis.'},
+  {icon:'👁',name:'Ojo del Sahara (Richat)',where:'Mauritania',score:1,txt:'Estructura geológica de 40 km de diámetro con anillos concéntricos, popular en internet. Los geólogos la explican por la erosión de un domo; no se han hallado restos de asentamiento humano.'},
+  {icon:'🏝',name:'Azores',where:'Atlántico',score:1,txt:'Cumbres de un continente sumergido, según Donnelly y Kircher. Refutado por la tectónica de placas: la dorsal mesoatlántica crece, no se hunde.'},
+  {icon:'🧊',name:'Antártida',where:'Polo Sur',score:1,txt:'La teoría del «desplazamiento de la corteza» de Charles Hapgood, popularizada por Graham Hancock. Sostiene que la Antártida estuvo libre de hielo hace 12.000 años — la geología lo descarta por completo.'},
+  {icon:'🗿',name:'Malta',where:'Mediterráneo',score:2,txt:'Los templos megalíticos de Malta son las construcciones exentas más antiguas de la Tierra (3600 a. C.). Entre Malta y Sicilia existió un puente de tierra hoy sumergido.'},
+  {icon:'⛵',name:'Hélice',where:'Peloponeso',score:3,txt:'No una ubicación, sino un prototipo: una ciudad sumergida por un terremoto en el 373 a. C. Platón sin duda conocía esa catástrofe cuando escribió el Timeo.'},
+  {icon:'🌊',name:'Doggerland',where:'Mar del Norte',score:2,txt:'Tierra real entre Gran Bretaña y Europa, inundada tras la glaciación (c. 6200 a. C., deslizamiento de Storegga). Allí vivía gente, pero no había civilización.'},
+  {icon:'🐚',name:'Cuba / Bahamas',where:'Caribe',score:1,txt:'La «carretera de Bimini» y las estructuras submarinas frente a Cuba. Los geólogos identificaron la «carretera» como roca de playa natural agrietada en bloques.'},
+];
+document.getElementById('theoryGrid').innerHTML = theories.map(t => `
+  <div class="reveal card p-6 flex flex-col">
+    <div class="flex items-start justify-between"><span class="text-3xl">${t.icon}</span><span class="text-xs uppercase tracking-wider text-slate-500">${t.where}</span></div>
+    <h4 class="serif text-2xl mt-3">${t.name}</h4>
+    <p class="text-slate-400 text-sm mt-2 leading-relaxed flex-1">${t.txt}</p>
+    <div class="mt-4 flex items-center gap-2 text-xs text-slate-500">Plausibilidad: <span class="gold tracking-widest">${'●'.repeat(t.score)}${'○'.repeat(5-t.score)}</span></div>
+  </div>`).join('');
+
+/* ===== Culture ===== */
+const cult = [
+  ['📚','Julio Verne','«20.000 leguas de viaje submarino» (1870): el capitán Nemo muestra a Aronnax las ruinas de Atlántida en el fondo del océano.'],
+  ['📖','Francis Bacon','«La Nueva Atlántida» (1627) — una utopía de una sociedad erudita que prefiguró la Royal Society.'],
+  ['🎬','Disney','«Atlántida: el imperio perdido» (2001) — una expedición steampunk de 1914 con un idioma creado por Marc Okrand.'],
+  ['🦸','DC Comics','Aquaman — rey de Atlántida, una supercivilización submarina, desde 1941.'],
+  ['📺','Stargate Atlantis','Una ciudad-nave de los Antiguos en la galaxia Pegaso — serie de 2004–2009.'],
+  ['🎮',"Assassin's Creed Odyssey",'La expansión «El destino de Atlántida» lleva al jugador a la ciudad Isu.'],
+  ['🎼','Manuel de Falla','La cantata escénica «Atlántida» (1961), según el poema de Jacinto Verdaguer.'],
+  ['✍','Alexéi Tolstói','«Aelita» (1923): los marcianos son descendientes de los atlantes que huyeron de la Tierra.'],
+];
+document.getElementById('cultureGrid').innerHTML = cult.map(c => `<div class="reveal card p-6"><div class="text-3xl mb-3">${c[0]}</div><h4 class="serif text-xl gold">${c[1]}</h4><p class="text-slate-400 text-sm mt-2 leading-relaxed">${c[2]}</p></div>`).join('');
+
+/* ===== Quotes ===== */
+const quotes = [
+  ['Ustedes, los helenos, son siempre niños, y no hay entre los helenos ningún anciano.','Sacerdote egipcio a Solón, Timeo'],
+  ['Quien inventó Atlántida, la hizo desaparecer.','Aristóteles (según Estrabón)'],
+  ['Atlántida no es un lugar en el mapa, sino un estado de la imaginación humana.','Un historiador moderno'],
+  ['El mito de Atlántida es la primera ciencia ficción de la historia.','Estudiosos de la obra de Platón'],
+  ['El mar nos lo ha devuelto todo, excepto Atlántida.','Un dicho de los marineros'],
+];
+let qi = 0; const qt = document.getElementById('quoteText'), qa = document.getElementById('quoteAuthor');
+function showQ() { qt.style.opacity = 0; qa.style.opacity = 0; setTimeout(() => { qt.textContent = '«' + quotes[qi][0] + '»'; qa.textContent = '— ' + quotes[qi][1]; qt.style.opacity = 1; qa.style.opacity = 1; }, 300); }
+document.getElementById('nextQ').onclick = () => { qi = (qi+1)%quotes.length; showQ(); };
+document.getElementById('prevQ').onclick = () => { qi = (qi-1+quotes.length)%quotes.length; showQ(); };
+showQ(); setInterval(() => { qi = (qi+1)%quotes.length; showQ(); }, 8000);
+
+/* ===== Glossary ===== */
+const gloss = [
+  ['Acrópolis','La colina central de la capital, donde se erguían el templo de Poseidón y el palacio real.'],
+  ['Columnas de Hércules','Las rocas a ambos lados del estrecho de Gibraltar; Atlántida se hallaba «ante» ellas.'],
+  ['Cleito','La mortal hija de Evenor y Leucipe, amada de Poseidón, madre de los diez reyes.'],
+  ['Critias','Diálogo de Platón con una descripción detallada de la isla; también el nombre del narrador.'],
+  ['Oricalco','Metal legendario «segundo en valor solo al oro»; probablemente un latón natural.'],
+  ['Plethron','Medida griega de longitud ≈ 30,8 m; 100 pies griegos.'],
+  ['Poseidón','Dios de los mares, fundador y protector de Atlántida.'],
+  ['Sais','Ciudad en el delta del Nilo, donde los sacerdotes del templo de Neit contaron a Solón la historia.'],
+  ['Solón','Legislador y poeta ateniense (c. 640–560 a. C.), el primer heleno en conocer Atlántida.'],
+  ['Estadio','Medida de longitud ≈ 185 m; el diámetro de la capital era de 27 estadios.'],
+  ['Timeo','Diálogo de Platón donde la historia de Atlántida se menciona por primera vez brevemente.'],
+  ['Trirreme','Barco de guerra con tres filas de remos; la flota de Atlántida — 1.200 trirremes.'],
+  ['Atlas','El hijo mayor de Poseidón, primer rey supremo; de él el nombre de la isla y del océano.'],
+  ['Gadiro','El hermano gemelo de Atlas; su dominio era la región de Gades (la actual Cádiz, en España).'],
+  ['Hibris (ὕβρις)','Soberbia, desafío a los dioses — la causa de la ruina de los atlantes.'],
+  ['Donnelly','Ignatius Donnelly, congresista estadounidense, autor del libro de 1882, fundador de la «atlantología».'],
+];
+const gBox = document.getElementById('glossary');
+function renderGloss(f='') { gBox.innerHTML = gloss.filter(g => (g[0]+g[1]).toLowerCase().includes(f.toLowerCase())).map(g => `<div class="card p-5"><h4 class="serif text-xl gold">${g[0]}</h4><p class="text-slate-400 text-sm mt-1">${g[1]}</p></div>`).join('') || '<p class="text-slate-500 col-span-2 text-center">No se ha encontrado nada</p>'; }
+renderGloss(); document.getElementById('glossSearch').oninput = e => renderGloss(e.target.value);
+
+/* ===== Quiz ===== */
+const quiz = [
+  {q:'¿En qué diálogos describe Platón Atlántida?',a:['La República y las Leyes','Timeo y Critias','Fedón y el Banquete','Apología y Gorgias'],c:1},
+  {q:'¿Qué dios se consideraba fundador de Atlántida?',a:['Zeus','Apolo','Poseidón','Hefesto'],c:2},
+  {q:'¿Cuántos reyes gobernaban Atlántida?',a:['Tres','Siete','Diez','Doce'],c:2},
+  {q:'¿Cómo se llamaba el metal legendario de los atlantes?',a:['Adamante','Oricalco','Electro','Mithril'],c:1},
+  {q:'Según Platón, ¿en cuánto tiempo pereció Atlántida?',a:['En cien años','En un año','En un solo día','En un instante'],c:2},
+  {q:'¿De quién supo Solón la historia de Atlántida?',a:['Del oráculo de Delfos','De los sacerdotes egipcios','De los mercaderes fenicios','De los magos persas'],c:1},
+  {q:'¿Qué estado derrotó a los atlantes?',a:['Esparta','Egipto','Troya','La antigua Atenas'],c:3},
+  {q:'¿Cuántos anillos de agua rodeaban la isla central de la capital?',a:['Uno','Dos','Tres','Cinco'],c:2},
+  {q:'¿Qué filósofo antiguo consideraba Atlántida una ficción?',a:['Sócrates','Aristóteles','Pitágoras','Heráclito'],c:1},
+  {q:'¿Qué animal sacrificaban los reyes al prestar juramento?',a:['Un caballo','Un delfín','Un toro','Un águila'],c:2},
+];
+let qIdx = 0, score = 0; const box = document.getElementById('quizBox');
+function renderQuiz() {
+  if (qIdx >= quiz.length) {
+    const r = score === quiz.length ? '¡Eres un verdadero rey de Atlántida!' : score >= 7 ? 'Sacerdote de Poseidón — ¡excelente resultado!' : score >= 4 ? 'Un navegante digno. Hay donde crecer.' : 'Las olas aún guardan sus secretos de ti…';
+    box.innerHTML = `<div class="text-center"><div class="serif text-7xl gold">${score}/${quiz.length}</div><p class="serif text-2xl mt-4">${r}</p><button id="restart" class="mt-8 px-8 py-3 bg-[#c9a24a] text-[#03111f] font-semibold">Intentar de nuevo</button></div>`;
+    document.getElementById('restart').onclick = () => { qIdx = 0; score = 0; renderQuiz(); }; return;
+  }
+  const item = quiz[qIdx];
+  box.innerHTML = `<div class="flex justify-between text-xs uppercase tracking-wider text-slate-500 mb-4"><span>Pregunta ${qIdx+1} de ${quiz.length}</span><span>Puntos: ${score}</span></div>
+    <div class="h-1 bg-[#062a44] mb-6"><div class="h-full bg-[#c9a24a] transition-all" style="width:${qIdx/quiz.length*100}%"></div></div>
+    <h3 class="serif text-2xl md:text-3xl mb-6">${item.q}</h3>
+    <div class="space-y-3">${item.a.map((o,i) => `<button class="ans w-full text-left px-5 py-3 border border-[#c9a24a]/30 hover:border-[#c9a24a] hover:bg-[#c9a24a]/10 transition" data-i="${i}">${o}</button>`).join('')}</div>`;
+  box.querySelectorAll('.ans').forEach(b => b.onclick = () => {
+    const i = +b.dataset.i; box.querySelectorAll('.ans').forEach(x => x.disabled = true);
+    if (i === item.c) { b.classList.add('bg-emerald-600/40','border-emerald-400'); score++; }
+    else { b.classList.add('bg-red-600/40','border-red-400'); box.querySelector(`[data-i="${item.c}"]`).classList.add('bg-emerald-600/40','border-emerald-400'); }
+    setTimeout(() => { qIdx++; renderQuiz(); }, 1100);
+  });
+}
+renderQuiz();
+
+/* ===== Reveal on scroll ===== */
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } }), {threshold:.1});
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
